@@ -1,9 +1,10 @@
 package main
 
 import (
-"os"
-//"context"
-"github.com/urfave/cli"
+	"os"
+	"github.com/urfave/cli"
+	"github.com/andychuang/pttnotifier"
+	"log"
 )
 
 func InitApp() *cli.App {
@@ -22,18 +23,24 @@ func InitApp() *cli.App {
 	}
 
 	app.Action = func(c *cli.Context) error {
-		return StartDetectTarget()
+		return StartDetectTarget(c)
 	}
 	return app
 }
 
-func StartDetectTarget() error {
-	print("Start detecting")
-	//ctx := context.Background()
+func StartDetectTarget(c *cli.Context) error {
+	log.Println("Start detecting")
+
+	dc, err := pttnotifier.NewDetectorCenter(flagTarget, flagCrawlingFrequency, flagMaxCrawlerNumber)
+	if err != nil {
+		return err
+	}
+	if err := dc.Run(); err != nil {
+		return err
+	}
 
 	return nil
 }
-
 
 func main() {
 	app := InitApp()
