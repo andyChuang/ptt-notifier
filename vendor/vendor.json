@@ -15,10 +15,22 @@
 			"revisionTime": "2016-12-24T14:14:13Z"
 		},
 		{
+			"checksumSHA1": "ptzgvF1JdO4oOS4s3PdLdMWDcHU=",
+			"path": "github.com/go-telegram-bot-api/telegram-bot-api",
+			"revision": "9dda67c714e5e2cba837b28a0172cca2ed54f078",
+			"revisionTime": "2017-08-06T03:56:32Z"
+		},
+		{
 			"checksumSHA1": "1o7rcXsVpxI4m1qbQ4Y/ZuPwyqk=",
 			"path": "github.com/julianshen/gopttcrawler",
 			"revision": "8fb9bb40bc2269d0cc0d25fec503ad80558402c9",
 			"revisionTime": "2017-01-19T03:35:01Z"
+		},
+		{
+			"checksumSHA1": "t8jzPFIv4DNACv+cuZoigNmjPLQ=",
+			"path": "github.com/technoweenie/multipartstreamer",
+			"revision": "a90a01d73ae432e2611d178c18367fbaa13e0154",
+			"revisionTime": "2013-10-20T00:18:33Z"
 		},
 		{
 			"checksumSHA1": "9LeR7BH4PSu8LRDZ8bY7QY1HXJE=",
@@ -39,5 +51,5 @@
 			"revisionTime": "2017-07-05T22:25:54Z"
 		}
 	],
-	"rootPath": "github.com/andychuang/ptt-notifier"
+	"rootPath": "github.com/andychuang/pttnotifier"
 }

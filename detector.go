@@ -39,7 +39,6 @@ func (d *Detector) Run() {
 		return
 	}
 	for {
-		print("Begin crawling")
 		articles, err := d.Crawler.Crawl(nil)
 		if err != nil {
 			log.Println(fmt.Errorf("Crawling failed with board name: %s. Skiped. %s", d.BoardName, err.Error()))
@@ -58,13 +57,14 @@ func (d *Detector) detect(articles []*model.Article) {
 	for _, article := range articles {
 		for _, keyword := range d.Keywords {
 			if d.contains(*article, keyword) && !d.isSummit(article.ID) {
-				log.Println("Found!")
 				d.SummitID = append(d.SummitID, article.ID)
 				result := &model.DetectResult{
 					BoardName: article.Board,
 					Keyword:   keyword,
 					Title:     article.Title,
 					Id:        article.ID,
+					Author:    article.Author,
+					Url:       fmt.Sprintf(model.PTT_WEB_URL_PATTERN, article.Board, article.ID),
 				}
 				d.SummitCh <- result
 			}
@@ -73,6 +73,7 @@ func (d *Detector) detect(articles []*model.Article) {
 }
 
 func (d *Detector) contains(article model.Article, keyword string) bool {
+	// TODO: article.Content is always empty... will report issue to author
 	return strings.Contains(article.Content, keyword) || strings.Contains(article.Title, keyword)
 }
 

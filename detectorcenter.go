@@ -3,26 +3,32 @@ package pttnotifier
 import (
 	"github.com/andychuang/pttnotifier/crawler"
 	"github.com/andychuang/pttnotifier/model"
-	"log"
 	"encoding/json"
+	"github.com/andychuang/pttnotifier/notifier"
+	"log"
 )
 
 type DetectorCenter struct {
 	Target      map[string][]string
 	DetectorNum int
 	Frequency   string
+	Notifier    notifier.Notifier
 }
 
-func NewDetectorCenter(rawTarget, frequency string, detectorNum int) (*DetectorCenter, error) {
+func NewDetectorCenter(rawTarget, frequency, notifierConfig string, detectorNum int) (*DetectorCenter, error) {
 	target, err := parseTarget(rawTarget)
 	if err != nil {
 		return nil, err
 	}
-
+	notifier, err := notifier.NewNotifier(notifierConfig)
+	if err != nil {
+		return nil, err
+	}
 	return &DetectorCenter{
 		Target:      target,
 		DetectorNum: detectorNum,
 		Frequency:   frequency,
+		Notifier:    notifier,
 	}, nil
 }
 
@@ -46,8 +52,9 @@ func (dc *DetectorCenter) Run() error {
 	for {
 		select {
 		case result := <-summitCh:
-			// TODO: push notification
-			log.Printf("Push %v", result)
+			msg := result.Display()
+			log.Printf("Push %s to listeners", msg)
+			dc.Notifier.Push(msg)
 		case err := <-errCh:
 			return err
 		}
@@ -58,10 +65,10 @@ func (dc *DetectorCenter) Run() error {
 
 // Return map[board name]{keyword1, keyword2...}
 func parseTarget(rawData string) (map[string][]string, error) {
-	log.Printf("rawdata %s", rawData)
 	target := map[string][]string{}
 	if err := json.Unmarshal([]byte(rawData), &target); err != nil {
 		return nil, err
 	}
+	log.Printf("target: %#v", target)
 	return target, nil
 }

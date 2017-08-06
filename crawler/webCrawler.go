@@ -41,7 +41,7 @@ func (wc *WebCrawler) getLatestArticles(iter gopttcrawler.Iterator) []*model.Art
 			}
 			i++
 			articles = append(articles, convertModel(*article))
-			log.Printf("%v %v", i, article)
+			log.Printf("%s", article.Title)
 		}
 	}
 	return articles

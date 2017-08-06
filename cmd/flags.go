@@ -6,6 +6,7 @@ var (
 	flagCrawlingFrequency = ""
 	flagTarget            = ""
 	flagMaxCrawlerNumber  = 0
+	flagNotifierConfig    = ""
 )
 
 var cmdFlags = []cli.Flag{
@@ -28,5 +29,11 @@ var cmdFlags = []cli.Flag{
 		EnvVar:      "PTT_NOTIFIER_MAX_CRAWLER_NUM",
 		Value:       5,
 		Destination: &flagMaxCrawlerNumber,
+	},
+	cli.StringFlag{
+		Name:        "notifier",
+		Usage:       "Notifier config",
+		EnvVar:      "PTT_NOTIFIER_CONFIG",
+		Destination: &flagNotifierConfig,
 	},
 }
