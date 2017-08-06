@@ -7,4 +7,5 @@ type Article struct {
 	Content  string
 	Author   string
 	DateTime string
+	Url      string
 }

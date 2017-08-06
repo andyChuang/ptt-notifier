@@ -64,7 +64,7 @@ func (d *Detector) detect(articles []*model.Article) {
 					Title:     article.Title,
 					Id:        article.ID,
 					Author:    article.Author,
-					Url:       fmt.Sprintf(model.PTT_WEB_URL_PATTERN, article.Board, article.ID),
+					Url:       article.Url,
 				}
 				d.SummitCh <- result
 			}
@@ -73,7 +73,6 @@ func (d *Detector) detect(articles []*model.Article) {
 }
 
 func (d *Detector) contains(article model.Article, keyword string) bool {
-	// TODO: article.Content is always empty... will report issue to author
 	return strings.Contains(article.Content, keyword) || strings.Contains(article.Title, keyword)
 }
 

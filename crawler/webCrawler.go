@@ -40,6 +40,7 @@ func (wc *WebCrawler) getLatestArticles(iter gopttcrawler.Iterator) []*model.Art
 				break
 			}
 			i++
+			article.Load()
 			articles = append(articles, convertModel(*article))
 			log.Printf("%s", article.Title)
 		}
@@ -55,5 +56,6 @@ func convertModel(article gopttcrawler.Article) *model.Article {
 		Content:  article.Content,
 		Author:   article.Author,
 		DateTime: article.DateTime,
+		Url:      article.Url,
 	}
 }

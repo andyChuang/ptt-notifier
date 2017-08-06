@@ -4,15 +4,13 @@ import (
 	"fmt"
 )
 
-const PTT_WEB_URL_PATTERN = "https://www.ptt.cc/bbs/%s/%s.html"
-
 type DetectResult struct {
 	BoardName string
 	Keyword   string
 	Title     string
 	Id        string
 	Url       string
-	Author string
+	Author    string
 }
 
 func (dr *DetectResult) Display() string {
