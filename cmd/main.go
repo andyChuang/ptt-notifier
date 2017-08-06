@@ -33,9 +33,11 @@ func StartDetectTarget(c *cli.Context) error {
 
 	dc, err := pttnotifier.NewDetectorCenter(flagTarget, flagCrawlingFrequency, flagMaxCrawlerNumber)
 	if err != nil {
+		log.Printf("New detector center failed. %s", err.Error())
 		return err
 	}
 	if err := dc.Run(); err != nil {
+		log.Printf("Error when detecting. %s", err.Error())
 		return err
 	}
 

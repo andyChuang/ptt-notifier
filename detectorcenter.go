@@ -4,6 +4,7 @@ import (
 	"github.com/andychuang/pttnotifier/crawler"
 	"github.com/andychuang/pttnotifier/model"
 	"log"
+	"encoding/json"
 )
 
 type DetectorCenter struct {
@@ -13,7 +14,7 @@ type DetectorCenter struct {
 }
 
 func NewDetectorCenter(rawTarget, frequency string, detectorNum int) (*DetectorCenter, error) {
-	target, err := parseKeyword(rawTarget)
+	target, err := parseTarget(rawTarget)
 	if err != nil {
 		return nil, err
 	}
@@ -56,8 +57,11 @@ func (dc *DetectorCenter) Run() error {
 }
 
 // Return map[board name]{keyword1, keyword2...}
-func parseKeyword(rawData string) (map[string][]string, error) {
-	return map[string][]string{
-		"Mabinogi": {"贈送"},
-	}, nil
+func parseTarget(rawData string) (map[string][]string, error) {
+	log.Printf("rawdata %s", rawData)
+	target := map[string][]string{}
+	if err := json.Unmarshal([]byte(rawData), &target); err != nil {
+		return nil, err
+	}
+	return target, nil
 }

@@ -18,7 +18,7 @@ var cmdFlags = []cli.Flag{
 	},
 	cli.StringFlag{
 		Name:        "target",
-		Usage:       "Detect target in <board name>-<keyword> format with ';' for multiple pairs",
+		Usage:       "Detect target in json format {<boardName1>:[<keyword1>,<keyword2>], <boardName2>...}",
 		EnvVar:      "PTT_NOTIFIER_TARGET",
 		Destination: &flagTarget,
 	},
